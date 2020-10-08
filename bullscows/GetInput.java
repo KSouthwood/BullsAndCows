@@ -4,17 +4,17 @@ import java.util.Scanner;
 
 public class GetInput {
     private final static Scanner scanner = new Scanner(System.in);
+    private String input;
 
     public String getGuess() {
-        String input;
         boolean goodInput = false;
 
         do {
             input = scanner.nextLine();
-            if (input.matches("\\d{1,10}")) {
+            if (input.matches("[0-9a-z]+")) {
                 goodInput = true;
             } else {
-                System.out.println("Invalid guess. Must be all digits.");
+                System.out.println("Invalid character in guess.");
             }
         } while (!goodInput);
 
@@ -22,17 +22,28 @@ public class GetInput {
     }
 
     public int getCodeLength() {
-        String input;
         System.out.println("Please enter the secret code's length:");
 
         do {
             input = scanner.nextLine();
             if (!input.matches("\\d+")) {
-                System.out.println("Please enter a number between 1 and 9.");
+                System.out.println("Please enter a number between 1 and 36.");
             }
         } while (!input.matches("\\d+"));
 
         return Integer.parseInt(input);
     }
 
+    public int getNumberOfSymbols() {
+        System.out.println("Please enter the number of possible symbols in the code:");
+
+        do {
+            input = scanner.nextLine();
+            if (!input.matches("[1-9]|[1-2][0-9]|3[0-6]")) {
+                System.out.println("Please enter a number between 1 and 36.");
+            }
+        } while (!input.matches("[1-9]|[1-2][0-9]|3[0-6]"));
+
+        return Integer.parseInt(input);
+    }
 }

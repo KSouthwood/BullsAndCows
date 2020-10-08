@@ -17,7 +17,8 @@ public class Controller {
 
         do {
             int length = input.getCodeLength();
-            secretCode = game.generateSecretCode(length);
+            int symbol = input.getNumberOfSymbols();
+            secretCode = game.generateSecretCode(length, symbol);
         } while (secretCode == null);
 
         return secretCode;

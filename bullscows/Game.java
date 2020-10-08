@@ -6,33 +6,48 @@ public class Game {
     private static int codeLength;
     private static Random rnd;
 
+    private static final String CODE_SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyz";
+    private static final String ASTERISKS = "************************************";
+
     Game() {
         rnd = new Random(System.nanoTime());
     }
 
-    public String generateSecretCode(int length) {
-        if (length < 1 || length > 10) {
-            System.out.println("Error: length of code must be between 1 and 10.");
+    public String generateSecretCode(int lengthOfCode, int numOfSymbols) {
+        if (lengthOfCode < 1 || lengthOfCode > 36) {
+            System.out.println("Error: length of code must be between 1 and 36.");
             return null;
         }
 
-        codeLength = length;
-        StringBuilder secretCode = new StringBuilder(length);
-        boolean[] digitUsed = new boolean[10];
+        if (lengthOfCode > numOfSymbols) {
+            System.out.println("Error: length of code cannot be more than number of symbols!");
+            return null;
+        }
 
-        for (int i = 0; i < length;) {
-            int digit = rnd.nextInt(10);
-            if (i == 0 && digit == 0) {
-                continue;
-            }
+        codeLength = lengthOfCode;
+        StringBuilder secretCode = new StringBuilder(lengthOfCode);
+        boolean[] symbolUsed = new boolean[numOfSymbols];
 
-            if (!digitUsed[digit]) {
-                secretCode.append(digit);
-                digitUsed[digit] = true;
+        for (int i = 0; i < lengthOfCode;) {
+            int symbol = rnd.nextInt(numOfSymbols);
+
+            if (!symbolUsed[symbol]) {
+                secretCode.append(CODE_SYMBOLS.charAt(symbol));
+                symbolUsed[symbol] = true;
                 i++;
             }
         }
 
+        System.out.printf("The secret is prepared: %s ", ASTERISKS.substring(0, lengthOfCode));
+        if (numOfSymbols == 1) {
+            System.out.printf("(%s).%n", CODE_SYMBOLS.charAt(0));
+        } else if (numOfSymbols < 11) {
+            System.out.printf("(0-%s).%n", CODE_SYMBOLS.charAt(numOfSymbols - 1));
+        } else if (numOfSymbols == 11) {
+            System.out.printf("(0-9, %s).%n", CODE_SYMBOLS.charAt(numOfSymbols - 1));
+        } else {
+            System.out.printf("(0-9, a-%s).%n", CODE_SYMBOLS.charAt(numOfSymbols - 1));
+        }
         return String.valueOf(secretCode);
     }
 
