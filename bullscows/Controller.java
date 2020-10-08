@@ -35,7 +35,8 @@ public class Controller {
                 codeGuessed = game.grade(code, guess);
                 turn++;
             } else {
-                System.out.printf("Please enter a %d digit number.%n", code.length());
+                System.out.printf("Please enter a %d symbol guess.%n", code.length());
+                System.exit(1);
             }
         } while (!codeGuessed);
     }

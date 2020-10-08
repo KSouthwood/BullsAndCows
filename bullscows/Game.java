@@ -16,11 +16,13 @@ public class Game {
     public String generateSecretCode(int lengthOfCode, int numOfSymbols) {
         if (lengthOfCode < 1 || lengthOfCode > 36) {
             System.out.println("Error: length of code must be between 1 and 36.");
+            System.exit(1);
             return null;
         }
 
         if (lengthOfCode > numOfSymbols) {
             System.out.println("Error: length of code cannot be more than number of symbols!");
+            System.exit(1);
             return null;
         }
 

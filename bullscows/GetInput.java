@@ -15,6 +15,7 @@ public class GetInput {
                 goodInput = true;
             } else {
                 System.out.println("Invalid character in guess.");
+                System.exit(1);
             }
         } while (!goodInput);
 
@@ -27,7 +28,8 @@ public class GetInput {
         do {
             input = scanner.nextLine();
             if (!input.matches("\\d+")) {
-                System.out.println("Please enter a number between 1 and 36.");
+                System.out.println("Error: Please enter a number between 1 and 36.");
+                System.exit(1);
             }
         } while (!input.matches("\\d+"));
 
@@ -40,7 +42,8 @@ public class GetInput {
         do {
             input = scanner.nextLine();
             if (!input.matches("[1-9]|[1-2][0-9]|3[0-6]")) {
-                System.out.println("Please enter a number between 1 and 36.");
+                System.out.println("Error: Please enter a number between 1 and 36.");
+                System.exit(1);
             }
         } while (!input.matches("[1-9]|[1-2][0-9]|3[0-6]"));
 
