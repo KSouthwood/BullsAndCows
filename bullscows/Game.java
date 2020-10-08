@@ -1,7 +1,14 @@
 package bullscows;
 
+import java.util.Random;
+
 public class Game {
-    private int codeLength;
+    private static int codeLength;
+    private static Random rnd;
+
+    Game() {
+        rnd = new Random(System.nanoTime());
+    }
 
     public String generateSecretCode(int length) {
         if (length < 1 || length > 10) {
@@ -9,35 +16,21 @@ public class Game {
             return null;
         }
 
-        this.codeLength = length;
-        StringBuilder secretCode;
+        codeLength = length;
+        StringBuilder secretCode = new StringBuilder(length);
+        boolean[] digitUsed = new boolean[10];
 
-        do {
-            secretCode = new StringBuilder(codeLength);
-            long pseudoRandomNumber = System.nanoTime();
-            boolean[] digitUsed = new boolean[10];
-            int maxLength = length;
-
-            if (codeLength == 1) {
-                digitUsed[0] = true;
+        for (int i = 0; i < length;) {
+            int digit = rnd.nextInt(10);
+            if (i == 0 && digit == 0) {
+                continue;
             }
 
-            while (pseudoRandomNumber > 0 && maxLength > 0) {
-                int digit = (int) (pseudoRandomNumber % 10);
-                pseudoRandomNumber /= 10;
-                if (!digitUsed[digit]) {
-                    digitUsed[digit] = true;
-                    secretCode.append(digit);
-                    maxLength--;
-                }
+            if (!digitUsed[digit]) {
+                secretCode.append(digit);
+                digitUsed[digit] = true;
+                i++;
             }
-        } while (secretCode.length() != codeLength);
-
-        if (secretCode.charAt(0) == '0') {
-            int swapWith = (Integer.parseInt(secretCode.substring(1, 2)) % (length - 1)) + 1;
-            char swapDigit = secretCode.charAt(swapWith);
-            secretCode.deleteCharAt(0).deleteCharAt(swapWith);
-            secretCode.insert(0, swapDigit).insert(swapWith, '0');
         }
 
         return String.valueOf(secretCode);

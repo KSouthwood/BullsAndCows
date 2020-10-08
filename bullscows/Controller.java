@@ -24,14 +24,18 @@ public class Controller {
     }
 
     private void gameLoop(String code) {
-        boolean codeGuessed;
+        boolean codeGuessed = false;
         int turn = 1;
 
         do {
             System.out.printf("Turn %d:%n", turn);
             String guess = input.getGuess();
-            codeGuessed = game.grade(code, guess);
-            turn++;
+            if (guess.length() == code.length()) {
+                codeGuessed = game.grade(code, guess);
+                turn++;
+            } else {
+                System.out.printf("Please enter a %d digit number.%n", code.length());
+            }
         } while (!codeGuessed);
     }
 }
