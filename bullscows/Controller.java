@@ -6,10 +6,10 @@ public class Controller {
     private static final Game game = new Game();
 
     public void controller() {
-        String secretCode = gameStart();
-        System.out.println("Okay, let's start a game!");
-        gameLoop(secretCode);
-        System.out.println("Congratulations! You guessed the secret code.");
+        do {
+            String secretCode = gameStart();
+            gameLoop(secretCode);
+        } while (input.playAgain());
     }
 
     private String gameStart() {
@@ -25,6 +25,8 @@ public class Controller {
     }
 
     private void gameLoop(String code) {
+        System.out.println("Okay, let's start a game!");
+
         boolean codeGuessed = false;
         int turn = 1;
 
@@ -39,5 +41,7 @@ public class Controller {
                 System.exit(1);
             }
         } while (!codeGuessed);
+
+        System.out.println("Congratulations! You guessed the secret code.");
     }
 }
